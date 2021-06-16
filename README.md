@@ -1,9 +1,15 @@
 # dialog.js
 html5 dialog to replace window.alert/confirm/prompt
 
-# usage
+# Install
+
+`npm i --save @dyz1990/dialog.js`
+
+OR
 
  ` <script src="dialog.js"></script>`
+
+# usage
 
  ```
 <script>
