@@ -1,4 +1,15 @@
-; (function (window) {
+;(function(root, factory ) {
+	if( typeof define === 'function' && define.amd ) {
+		define( function() {
+			root.dialog = factory();
+			return root.dialog;
+		} );
+	} else if( typeof exports === 'object' ) {
+		module.exports = factory();
+	} else {
+		root.dialog = factory();
+	}
+}(this,function () {
   var styles = document.createElement('style')
   styles.innerHTML='.x-dialog{opacity:0;transition:all ease 0.3s;margin:10px}\n'+
   '.x-dialog-wrap{align-items:center;}'+
@@ -426,5 +437,5 @@
     dialog.lang={}
   }
     
-  window.dialog = dialog
-})(window)
+  return dialog
+}));
