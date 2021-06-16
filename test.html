@@ -1,0 +1,59 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+
+  <script src="dialog.js"></script>
+</head>
+
+<body>
+  <div>
+    <button onclick="dialog.alert('操作成功','数据已保存')">Alert</button>
+    <button onclick="
+      dialog.confirm('删除','确定要删除吗')
+      .then(()=>{dialog.alert('已删除')})
+      .catch(()=>console.log('cancel'))
+      
+      ">Confirm</button>
+
+    <button onclick="
+      dialog.prompt('Rename','输入新名称','旧名称')
+      .then(n=>dialog.confirm('确认','确定重命名为:'+n).then(()=>n))
+      .then(n=>dialog.alert('操作成功','已重命名为：'+n))
+      ">Prompt</button>
+    <button onclick="customDialog()">Dialog</button>
+    <button onclick="dialog.toast(new Date().toString())">Toast</button>
+  </div>
+  <script>
+
+    var pos = ['top', 'top right', 'center', 'bottom right']
+    function customDialog(n) {
+      n = (n || 0)%pos.length
+      let position = pos[n]
+      let d = dialog({
+        position: position,
+        message: 'Dialog: ' + position,
+        width: 320 - n * 20,
+        buttons: [
+          {
+            text: 'Show',
+            handler() {
+              customDialog(n + 1)
+            }
+          },
+          {
+            text: 'Dismiss',
+            handler() {
+              this.dismiss()
+            }
+          }
+        ]
+      })
+
+      d.show()
+    }
+  </script>
+</body>
+
+</html>
