@@ -138,7 +138,6 @@
     if (options.content) {
       var d = this._getChild('x-dialog-content', true)
       d.innerHTML = ''
-      d.parentNode&&d.parentNode.removeChild(d)
       d.appendChild(options.content)
     }else{
       this._removeChild('x-dialog-content')
