@@ -1,6 +1,6 @@
 {
   "name": "@dyz1990/dialog.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "dialog to replace window.alert/confirm/prompt",
   "main": "dialog.js",
   "scripts": {
