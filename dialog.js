@@ -72,7 +72,9 @@
 
     this._config(options)
   }
-  
+  Dialog.prototype.reconfig = function(options){
+    this._config(options)
+  }
   Dialog.prototype._config=function(options){
     options = options || {}
     if(options!==this.options){
@@ -99,8 +101,8 @@
       }
 
       dialogWrap.onclick=function(){
-        options.onOutsideClick&&options.onOutsideClick.call(self);
-        if(options.dismissOnClickOutside){
+        let handled = options.onOutsideClick&&options.onOutsideClick.call(self);
+        if(!handled && options.dismissOnClickOutside){
           self.dismiss()
         }
       }
@@ -125,7 +127,7 @@
       this._removeChild('x-dialog-title')
     }
     if (options.message!==undefined) {
-      var d = this._getChild('x-dialog-message')
+      var d = this._getChild('x-dialog-message', true)
       d.style='margin:20px 20px 25px 20px;text-align:center;font-size:14px'
       d.innerHTML = options.message
       options.messageStyler&&options.messageStyler.call(self, d.style)
@@ -134,14 +136,15 @@
       this._removeChild('x-dialog-message')
     }
     if (options.content) {
-      var d = this._getChild('x-dialog-content')
+      var d = this._getChild('x-dialog-content', true)
       d.innerHTML = ''
+      d.parentNode&&d.parentNode.removeChild(d)
       d.appendChild(options.content)
     }else{
       this._removeChild('x-dialog-content')
     }
     if (options.buttons && options.buttons.length) {
-      var d = this._getChild('x-dialog-buttons')
+      var d = this._getChild('x-dialog-buttons', true)
       d.style="display:flex;"
       d.innerHTML = ''
       var horizontalButtonCount = options.horizontalButtonCount||2
@@ -184,14 +187,16 @@
     return this
   }
 
-  Dialog.prototype._getChild = function (cls) {
+  Dialog.prototype._getChild = function (cls, readd) {
     var dialogDiv = this.dialogDiv
     var child = dialogDiv.querySelector('.'+cls) 
     if(!child){
       child = document.createElement('div')
       child.className=cls
       dialogDiv.appendChild(child)
-      console.log('create child',cls)
+    }else if(readd){
+      dialogDiv.removeChild(child)
+      dialogDiv.appendChild(child)
     }
     return child
   }

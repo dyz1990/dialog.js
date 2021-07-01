@@ -20,7 +20,7 @@
     <button onclick="
       dialog.prompt('Rename','输入新名称','旧名称')
       .then(n=>dialog.confirm('确认','确定重命名为:'+n).then(()=>n))
-      .then(n=>dialog.alert('操作成功','已重命名为：'+n))
+      .then(n=>dialog.alert('操作成功','已重命名为：'+n));
       ">Prompt</button>
     <button onclick="customDialog()">Dialog</button>
     <button onclick="dialog.toast(new Date().toString())">Toast</button>
@@ -52,6 +52,9 @@
       })
 
       d.show()
+      setTimeout(()=>{
+        d._config({title:'Hello'})
+      },600)
     }
   </script>
 </body>
